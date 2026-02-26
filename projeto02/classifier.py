@@ -1,0 +1,20 @@
+from llm_client import gerar_resposta
+from validator import validate_response
+
+CATEGORIAS = ["Suporte", "Vendas", "Financeiro", "Geral"]
+
+
+def classificar_mensagem(mensagem, temperature=0.2):
+    prompt = f"""
+        Classifique a mensagem abaixo em uma das seguintes categorias: {', '.join(CATEGORIAS)}.
+        Retorne apenas um JSON no formato:
+        {{
+            "categoria": "nome_categoria"
+        }}
+
+        Mensagem: "{mensagem}"
+    """
+    resposta = gerar_resposta(prompt, temperature)
+    resultado_validado = validate_response(resposta)
+
+    return resultado_validado
